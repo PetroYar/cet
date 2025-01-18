@@ -1,139 +1,96 @@
-const footballManager = {
-  player: [],
-  club: [],
-  transfer: [],
+const form = document.querySelector(".form");
+const taskList = document.querySelector(".task");
+const progressList = document.querySelector(".progress");
+const completedList = document.querySelector(".completed");
+
+const trello = {
+  task: [],
+  columns: [
+    { name: "task", id: 0 },
+    { name: "progress", id: 1 },
+    { name: "completed", id: 2 },
+  ],
 };
 
 function Base() {
-  const uid = Math.floor(Math.random() * 10000);
+  const uid = Math.floor(Math.random() * 444);
   return {
     uid,
-    date: new Date().toLocaleDateString("uk-UA"),
+    createDate: new Date().toLocaleDateString("uk-UA"),
   };
 }
 
-function Player({ name, position, age, price, clubId = null }) {
+function Task(name, columnId = 0) {
   return {
     ...Base(),
     name,
-    position,
-    age,
-    price,
-    clubId,
+    columnId,
   };
 }
 
-function Club(name, budget) {
-  return {
-    ...Base(),
-    name,
-    budget,
-  };
-}
+function addTask(e) {
+  e.preventDefault();
 
-function addPlayer({ name, position, age, price, clubId }) {
-  const newPlayer = Player({ name, position, age, price, clubId });
-  footballManager.player.push(newPlayer);
-}
-function addClub(name, budget) {
-  const newClub = Club(name, budget);
-  footballManager.club.push(newClub);
-}
+  const value = e.target.task.value.trim();
 
-function getInfoClub(uid) {
-  const club = footballManager.club.find((club) => club.uid === uid);
-  if (club) {
-    console.log(
-      `club name ${club.name} \nclub budget ${club.budget} \nplayers:`
-    );
+  if (value === "") return;
 
-    footballManager.player.forEach((player) => {
-      if (player.clubId === club.uid) {
-        console.log(player.name);
-      } else {
-        console.log("not player");
-      }
-    });
-  } else {
-    console.log("not clube");
-  }
-}
-function buyPlayer({ playerId, sellClubId, buyClubId }) {
-  const player = footballManager.player.find(
-    (player) => player.uid === playerId
-  );
-  const sellClub = footballManager.club.find((club) => club.uid === sellClubId);
-  const buyClub = footballManager.club.find((club) => club.uid === buyClubId);
+  const task = Task(value);
+  trello.task.push(task);
 
-  if (player && buyClubId && sellClubId) {
-    if (buyClub.budget >= player.price) {
-      buyClub.budget -= player.price;
-      sellClub.budget += player.price;
+  const li = document.createElement("li");
+  const btn = document.createElement("button");
+  const select = document.createElement("select");
 
-      footballManager.player = footballManager.player.map((data) => {
-        return {
-          ...data,
-          clubId: buyClubId,
-          buyDate: new Date().toLocaleDateString("uk-UA"),
-        };
-      });
+  const option = document.createElement("option");
+  const option1 = document.createElement("option");
+  const option2 = document.createElement("option");
 
-      const newTransfer = {
-        playerId,
-        sellClubId,
-        buyClubId,
-        price: player.price,
-        buyDate: new Date().toLocaleDateString("uk-UA"),
-      };
+  option.value = "task";
+  option1.value = "progress";
+  option2.value = "completed";
 
-      footballManager.transfer.push(newTransfer);
-    } else {
-      console.log("The club is free of money");
+  option.textContent = "Task";
+  option1.textContent = "In Progress";
+  option2.textContent = "Completed";
+
+  select.appendChild(option);
+  select.appendChild(option1);
+  select.appendChild(option2);
+
+  li.textContent = task.name;
+
+  btn.textContent = "Delete";
+  btn.addEventListener("click", () => {
+    li.remove();
+    trello.task = trello.task.filter((el) => el.uid !== task.uid);
+    console.log(trello.task);
+  });
+
+  li.appendChild(btn);
+  li.appendChild(select);
+  taskList.appendChild(li);
+
+  select.addEventListener("change", (event) => {
+    const selectedValue = event.target.value;
+    const taskFind = trello.task.find((el) => el.uid === task.uid);
+
+    if (selectedValue === "task") {
+      taskFind.columnId = 0;
+      taskList.appendChild(li);
+    } else if (selectedValue === "progress") {
+      taskFind.columnId = 1;
+      progressList.appendChild(li);
+    } else if (selectedValue === "completed") {
+      taskFind.columnId = 2;
+      completedList.appendChild(li);
     }
-  } else if (player && buyClub) {
-    footballManager.player = footballManager.player.map((data) => {
-      return {
-        ...data,
-        clubId: buyClubId,
-        buyDate: new Date().toLocaleDateString("uk-UA"),
-      };
-    });
-  } else {
-    console.log("error date");
-  }
+
+    console.log(trello.task);
+  });
+
+  form.reset();
+  console.log(trello.task);
 }
 
-addClub("barsa", 33_000);
-addClub("liver", 22_000);
-addPlayer({
-  name: "petro",
-  age: 33,
-  position: "center",
-  price: 1_400,
-});
-addPlayer({
-  name: "ivan",
-  age: 24,
-  position: "defender",
-  price: 1_100,
-});
-buyPlayer({
-  buyClubId: footballManager.club[0]?.uid,
-  playerId: footballManager.player[0]?.uid,
-});
-buyPlayer({
-  buyClubId: footballManager.club[0]?.uid,
-  playerId: footballManager.player[0]?.uid,
-  sellClubId: footballManager.club[1]?.uid,
-});
-getInfoClub(footballManager.club[0]?.uid);
-// infoClub(footballManager.club[0].uid);
-console.log(footballManager);
-
-// function sellPlayer(playerId, clubId) {
-//   const player = footballManager.player.find(
-//     (player) => player.uid === playerId
-//   );
-//   const club = footballManager.player.find((club) => club.uid === clubId);
-
-// }
+form.addEventListener("submit", (e) => addTask(e));
