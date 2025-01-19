@@ -18,7 +18,7 @@
         gap: 150px;
         justify-content: center;
       }
-      h2{
+      h2 {
         text-transform: uppercase;
       }
       ul {
@@ -27,7 +27,6 @@
         flex-direction: column;
         gap: 20px;
         padding: 20px;
-        
       }
       li {
         display: flex;
@@ -39,13 +38,42 @@
         background: #c38686;
       }
       .progress {
-        background: #2C857F;
+        background: #2c857f;
       }
       .completed {
-        background: #5FD06E;
+        background: #5fd06e;
       }
-      form{
+      form {
         place-self: center;
+      }
+      .form-edit {
+        display: none;
+        position:fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        background: #000;
+        color: #fff;
+        z-index: 20;
+      }
+      
+      .visable {
+        display: block;
+       
+      }
+
+      .visable::before {
+        content: "";
+        width: 100vw; /* Виправлено на vw */
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5); /* Додано прозорість для накладення */
+       position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+
       }
     </style>
     <form class="form">
@@ -53,15 +81,20 @@
     </form>
     <div class="container">
       <ul class="task">
-        <h2>task </h2>
+        <h2>task</h2>
       </ul>
       <ul class="progress">
-       <h2> is Progres</h2>
+        <h2>is Progres</h2>
       </ul>
       <ul class="completed">
         <h2>complited</h2>
       </ul>
     </div>
+    <form action="" class="form-edit">
+      <input type="text" name="task" />
+      <button class="form-edit__ok">ok</button>
+      <button type="button" class="form-edit__esc">Esc</button>
+    </form>
     <script src="script.js"></script>
   </body>
 </html>

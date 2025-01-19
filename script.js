@@ -2,6 +2,9 @@ const form = document.querySelector(".form");
 const taskList = document.querySelector(".task");
 const progressList = document.querySelector(".progress");
 const completedList = document.querySelector(".completed");
+// const edit = document.querySelector(".edit");
+const formEdit = document.querySelector(".form-edit");
+const formEditEsc = document.querySelector(".form-edit__esc");
 
 const trello = {
   task: [],
@@ -48,7 +51,7 @@ function createItem(task) {
   const li = document.createElement("li");
   const btn = document.createElement("button");
   const select = document.createElement("select");
-  const remuve = document.createElement('button')
+  const edit = document.createElement("button");
 
   const option = document.createElement("option");
   const option1 = document.createElement("option");
@@ -67,26 +70,46 @@ function createItem(task) {
   select.appendChild(option2);
 
   li.textContent = task.name;
-
   btn.textContent = "Delete";
-  remuve.textContent = "Remuve";
+  edit.textContent = "Edit";
 
-
+  
+  li.appendChild(select);
+  li.appendChild(edit);
+  li.appendChild(btn);
+  taskList.appendChild(li);
+  
   btn.addEventListener("click", () => {
     li.remove();
     trello.task = trello.task.filter((el) => el.uid !== task.uid);
     console.log(trello.task);
   });
-
-  remuve.addEventListener('click',()=>{
-    console.log(remuve)
-  })
-
-  li.appendChild(select);
-  li.appendChild(remuve);
-  li.appendChild(btn);
   
-  taskList.appendChild(li);
+  edit.addEventListener("click", () => {
+    formEdit.classList.add("visable");
+    const input = formEdit.querySelector("input");
+    input.value = task.name;
+
+    formEdit.addEventListener("submit", function edit(e) {
+      e.preventDefault();
+
+      const newValue = e.target.task.value.trim();
+      if (newValue === "") return;
+
+      const taskFind = trello.task.find((el) => el.uid === task.uid);
+      if (taskFind) {
+        taskFind.name = newValue;
+      }
+
+      li.firstChild.textContent = newValue;
+
+      saveData();
+
+      formEdit.classList.remove("visable");
+
+      formEdit.removeEventListener("submit", edit);
+    });
+  });
 
   select.value =
     task.columnId === 0
@@ -136,5 +159,10 @@ function loadData() {
   }
 }
 
-window.addEventListener("onLoad", loadData());
+window.addEventListener("DOMContentLoaded", loadData());
+
 form.addEventListener("submit", (e) => addTask(e));
+
+formEditEsc.addEventListener("click", () => {
+  formEdit.classList.remove("visable");
+});
