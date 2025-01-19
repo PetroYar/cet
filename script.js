@@ -38,9 +38,17 @@ function addTask(e) {
   const task = Task(value);
   trello.task.push(task);
 
+  createItem(task);
+
+  form.reset();
+
+  saveData();
+}
+function createItem(task) {
   const li = document.createElement("li");
   const btn = document.createElement("button");
   const select = document.createElement("select");
+  const remuve = document.createElement('button')
 
   const option = document.createElement("option");
   const option1 = document.createElement("option");
@@ -61,15 +69,31 @@ function addTask(e) {
   li.textContent = task.name;
 
   btn.textContent = "Delete";
+  remuve.textContent = "Remuve";
+
+
   btn.addEventListener("click", () => {
     li.remove();
     trello.task = trello.task.filter((el) => el.uid !== task.uid);
     console.log(trello.task);
   });
 
-  li.appendChild(btn);
+  remuve.addEventListener('click',()=>{
+    console.log(remuve)
+  })
+
   li.appendChild(select);
+  li.appendChild(remuve);
+  li.appendChild(btn);
+  
   taskList.appendChild(li);
+
+  select.value =
+    task.columnId === 0
+      ? "task"
+      : task.columnId === 1
+      ? "progress"
+      : "completed";
 
   select.addEventListener("change", (event) => {
     const selectedValue = event.target.value;
@@ -86,11 +110,31 @@ function addTask(e) {
       completedList.appendChild(li);
     }
 
-    console.log(trello.task);
+    saveData();
   });
-
-  form.reset();
-  console.log(trello.task);
+  return li;
 }
 
+function saveData() {
+  localStorage.setItem("trello", JSON.stringify(trello));
+}
+function loadData() {
+  const data = JSON.parse(localStorage.getItem("trello"));
+  if (data) {
+    trello.task = data.task || [];
+    trello.task.forEach((task) => {
+      const li = createItem(task);
+
+      if (task.columnId === 0) {
+        taskList.appendChild(li);
+      } else if (task.columnId === 1) {
+        progressList.appendChild(li);
+      } else if (task.columnId === 2) {
+        completedList.appendChild(li);
+      }
+    });
+  }
+}
+
+window.addEventListener("onLoad", loadData());
 form.addEventListener("submit", (e) => addTask(e));

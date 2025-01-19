@@ -3,26 +3,49 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
+    <!-- <link rel="stylesheet" href="/style.css" /> -->
 
     <title>html</title>
   </head>
   <body>
     <style>
+      * {
+        padding: 0;
+        /* margin: 0; */
+      }
       .container {
         display: flex;
         gap: 150px;
         justify-content: center;
+      }
+      h2{
+        text-transform: uppercase;
       }
       ul {
         text-align: center;
         display: flex;
         flex-direction: column;
         gap: 20px;
+        padding: 20px;
+        
       }
       li {
         display: flex;
         flex-direction: column;
+        align-items: center;
+      }
+
+      .task {
+        background: #c38686;
+      }
+      .progress {
+        background: #2C857F;
+      }
+      .completed {
+        background: #5FD06E;
+      }
+      form{
+        place-self: center;
       }
     </style>
     <form class="form">
@@ -30,13 +53,13 @@
     </form>
     <div class="container">
       <ul class="task">
-        task
+        <h2>task </h2>
       </ul>
       <ul class="progress">
-        isProgres
+       <h2> is Progres</h2>
       </ul>
       <ul class="completed">
-        complited
+        <h2>complited</h2>
       </ul>
     </div>
     <script src="script.js"></script>
