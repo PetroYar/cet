@@ -1,35 +1,14 @@
+import { Task } from "./trello/libs/model.js";
+import { trello } from "./trello/libs/constant.js";
+import { saveData, loadData } from "./trello/libs/store.js";
+
 const form = document.querySelector(".form");
 const taskList = document.querySelector(".task");
 const progressList = document.querySelector(".progress");
 const completedList = document.querySelector(".completed");
-// const edit = document.querySelector(".edit");
+
 const formEdit = document.querySelector(".form-edit");
 const formEditEsc = document.querySelector(".form-edit__esc");
-
-const trello = {
-  task: [],
-  columns: [
-    { name: "task", id: 0 },
-    { name: "progress", id: 1 },
-    { name: "completed", id: 2 },
-  ],
-};
-
-function Base() {
-  const uid = Math.floor(Math.random() * 444);
-  return {
-    uid,
-    createDate: new Date().toLocaleDateString("uk-UA"),
-  };
-}
-
-function Task(name, columnId = 0) {
-  return {
-    ...Base(),
-    name,
-    columnId,
-  };
-}
 
 function addTask(e) {
   e.preventDefault();
@@ -47,7 +26,7 @@ function addTask(e) {
 
   saveData();
 }
-function createItem(task) {
+export function createItem(task) {
   const li = document.createElement("li");
   const btn = document.createElement("button");
   const select = document.createElement("select");
@@ -73,18 +52,17 @@ function createItem(task) {
   btn.textContent = "Delete";
   edit.textContent = "Edit";
 
-  
   li.appendChild(select);
   li.appendChild(edit);
   li.appendChild(btn);
   taskList.appendChild(li);
-  
+
   btn.addEventListener("click", () => {
     li.remove();
     trello.task = trello.task.filter((el) => el.uid !== task.uid);
     console.log(trello.task);
   });
-  
+
   edit.addEventListener("click", () => {
     formEdit.classList.add("visable");
     const input = formEdit.querySelector("input");
@@ -138,28 +116,10 @@ function createItem(task) {
   return li;
 }
 
-function saveData() {
-  localStorage.setItem("trello", JSON.stringify(trello));
-}
-function loadData() {
-  const data = JSON.parse(localStorage.getItem("trello"));
-  if (data) {
-    trello.task = data.task || [];
-    trello.task.forEach((task) => {
-      const li = createItem(task);
-
-      if (task.columnId === 0) {
-        taskList.appendChild(li);
-      } else if (task.columnId === 1) {
-        progressList.appendChild(li);
-      } else if (task.columnId === 2) {
-        completedList.appendChild(li);
-      }
-    });
-  }
-}
-
-window.addEventListener("DOMContentLoaded", loadData());
+window.addEventListener(
+  "DOMContentLoaded",
+  loadData(taskList, progressList, completedList)
+);
 
 form.addEventListener("submit", (e) => addTask(e));
 

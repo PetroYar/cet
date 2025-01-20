@@ -1,0 +1,140 @@
+* {
+  padding: 0;
+  /* margin: 0; */
+}
+.wraper {
+  display: flex;
+  gap: 150px;
+  justify-content: center;
+}
+h2 {
+  text-transform: uppercase;
+}
+ul {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.task {
+  background: #c38686;
+}
+.progress {
+  background: #2c857f;
+}
+.completed {
+  background: #5fd06e;
+}
+form {
+  place-self: center;
+  position: relative;
+}
+.form-edit {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background: #000;
+  color: #fff;
+  z-index: 20;
+}
+
+.visable {
+  display: block;
+}
+
+.visable::before {
+  content: "";
+  width: 100vw; /* Виправлено на vw */
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* Додано прозорість для накладення */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+.login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #828d8b;
+  padding: 40px;
+}
+
+.container {
+  place-self: center;
+
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+   display: flex;
+  gap: 100px;
+  justify-content: center;
+  flex-direction: column;
+}
+h2 {
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  text-align: center;
+}
+label {
+  display: block;
+  margin: 10px 0 5px;
+  position: relative;
+}
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+ button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  border: 1px solid black;
+  font-size: 1em;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #45a049;
+}
+.link {
+  display: block;
+  margin-top: 15px;
+  text-align: center;
+  color: #007bff;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+.link:hover {
+  text-decoration: underline;
+}
+
+.error{
+  
+  position: absolute;
+top: 65px;
+left: 0;
+color: red;
+font-size: 14px;
+}

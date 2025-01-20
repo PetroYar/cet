@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div id="login-form">
+        <h2>Login</h2>
+        <form autocomplete="on" class="login-form">
+          <label for="loginEmail">Email:</label>
+          <input
+            type="email"
+            id="loginEmail"
+            name="email"
+            required
+            autocomplete="email"
+          />
+
+          <label for="loginPassword">Password:</label>
+          <input
+            type="password"
+            id="loginPassword"
+            name="password"
+            required
+            autocomplete="current-password"
+          />
+          <span class="error"></span>
+          <button type="submit">Login</button>
+        </form>
+        <a href="./register.html" class="link" onclick="toggleForms()"
+          >Don't have an account? Register here</a
+        >
+      </div>
+    </div>
+    <script type="module" src="./login.js"></script>
+  </body>
+</html>
