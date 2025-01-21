@@ -7,13 +7,12 @@ function loginUser(e) {
   const userName = form.userName;
   const email = form.email;
 
-  const userExistsName = isExist(trello.users, 'name', userName);
-  const userExistsEmail = isExist(trello.users, 'email', email);
+  const userExistsName = isExist(trello.users, "name", userName);
+  const userExistsEmail = isExist(trello.users, "email", email);
 
   if (userExistsEmail && userExistsName) {
-
     window.location.href = "/deshboard.html";
-    errorMsg.textContent =``;
+    errorMsg.textContent = ``;
   } else {
     errorMsg.textContent = "Incorrect password or email";
   }

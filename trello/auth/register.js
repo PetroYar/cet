@@ -1,7 +1,7 @@
 import { User } from "../libs/model.js";
 import { trello } from "../libs/constant.js";
 import { isExist } from "../libs/helper.js";
-// import { saveData } from "../libs/store.js";
+import { saveData } from "../libs/store.js";
 
 const form = document.querySelector(".register-form");
 const errorNameMsg = document.querySelector(".error-name");
