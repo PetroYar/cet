@@ -1,128 +1,101 @@
-import { Task } from "./trello/libs/model.js";
+import { Column, Task } from "./trello/libs/model.js";
 import { trello } from "./trello/libs/constant.js";
 import { saveData, loadData } from "./trello/libs/store.js";
 
-const form = document.querySelector(".form");
-const taskList = document.querySelector(".task");
-const progressList = document.querySelector(".progress");
-const completedList = document.querySelector(".completed");
+const formColumn = document.querySelector(".form-add-column");
 
-const formEdit = document.querySelector(".form-edit");
-const formEditEsc = document.querySelector(".form-edit__esc");
+function render() {
+  const wraper = document.querySelector(".wraper");
+  wraper.innerHTML = "";
 
-function addTask(e) {
+  trello.columns.forEach((column) => {
+    const columnsList = document.createElement("ul");
+
+    columnsList.classList.add("column");
+
+    const delitColumnBtn = document.createElement("button");
+    delitColumnBtn.classList.add("delitColumn");
+    delitColumnBtn.textContent = "X";
+
+    
+    const columnsHeader = document.createElement("li");
+    const nameColumn = document.createElement("h3");
+    nameColumn.textContent = column.name;
+    columnsHeader.append(nameColumn, delitColumnBtn);
+
+    columnsHeader.classList.add("column-header");
+    
+    const formAddTask = document.createElement("form");
+    const inputAddTask = document.createElement("input");
+    inputAddTask.name = "taskName";
+    
+    const addTaskButton = document.createElement("button");
+    addTaskButton.textContent = "add task";
+
+    formAddTask.append(inputAddTask, addTaskButton);
+    columnsHeader.append(formAddTask);
+    columnsList.appendChild(columnsHeader);
+
+    trello.task
+      .filter((task) => task.columnId === column.uid)
+      .forEach((task) => {
+        const taskItem = document.createElement("li");
+        taskItem.textContent = task.name;
+        taskItem.classList.add("task-item");
+        columnsList.appendChild(taskItem);
+      });
+      
+      /// event
+
+      formAddTask.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = e.target.taskName.value;
+        if (name) {
+          createTask(name, column);
+        }
+      });
+
+      delitColumnBtn.addEventListener("click", () => {
+        deliteColumn(column, columnsList);
+      });
+
+    wraper.appendChild(columnsList);
+  });
+}
+function createColumn(e) {
   e.preventDefault();
-
-  const value = e.target.task.value.trim();
-
-  if (value === "") return;
-
-  const task = Task(value);
-  trello.task.push(task);
-
-  createItem(task);
-
-  form.reset();
-
-  saveData();
-}
-export function createItem(task) {
-  const li = document.createElement("li");
-  const btn = document.createElement("button");
-  const select = document.createElement("select");
-  const edit = document.createElement("button");
-
-  const option = document.createElement("option");
-  const option1 = document.createElement("option");
-  const option2 = document.createElement("option");
-
-  option.value = "task";
-  option1.value = "progress";
-  option2.value = "completed";
-
-  option.textContent = "Task";
-  option1.textContent = "In Progress";
-  option2.textContent = "Completed";
-
-  select.appendChild(option);
-  select.appendChild(option1);
-  select.appendChild(option2);
-
-  li.textContent = task.name;
-  btn.textContent = "Delete";
-  edit.textContent = "Edit";
-
-  li.appendChild(select);
-  li.appendChild(edit);
-  li.appendChild(btn);
-  taskList.appendChild(li);
-
-  btn.addEventListener("click", () => {
-    li.remove();
-    trello.task = trello.task.filter((el) => el.uid !== task.uid);
-    console.log(trello.task);
-  });
-
-  edit.addEventListener("click", () => {
-    formEdit.classList.add("visable");
-    const input = formEdit.querySelector("input");
-    input.value = task.name;
-
-    formEdit.addEventListener("submit", function edit(e) {
-      e.preventDefault();
-
-      const newValue = e.target.task.value.trim();
-      if (newValue === "") return;
-
-      const taskFind = trello.task.find((el) => el.uid === task.uid);
-      if (taskFind) {
-        taskFind.name = newValue;
-      }
-
-      li.firstChild.textContent = newValue;
-
-      saveData();
-
-      formEdit.classList.remove("visable");
-
-      formEdit.removeEventListener("submit", edit);
-    });
-  });
-
-  select.value =
-    task.columnId === 0
-      ? "task"
-      : task.columnId === 1
-      ? "progress"
-      : "completed";
-
-  select.addEventListener("change", (event) => {
-    const selectedValue = event.target.value;
-    const taskFind = trello.task.find((el) => el.uid === task.uid);
-
-    if (selectedValue === "task") {
-      taskFind.columnId = 0;
-      taskList.appendChild(li);
-    } else if (selectedValue === "progress") {
-      taskFind.columnId = 1;
-      progressList.appendChild(li);
-    } else if (selectedValue === "completed") {
-      taskFind.columnId = 2;
-      completedList.appendChild(li);
-    }
-
-    saveData();
-  });
-  return li;
+  const columnName = e.target.name.value.trim();
+  if (columnName) {
+    const newColumn = Column(columnName);
+    trello.columns.push(newColumn);
+    e.target.name.value = "";
+    saveData("trello", trello);
+    render();
+  }
 }
 
-window.addEventListener(
-  "DOMContentLoaded",
-  loadData(taskList, progressList, completedList)
-);
+function createTask(name, column) {
+  const newTask = Task(name, column.uid);
 
-form.addEventListener("submit", (e) => addTask(e));
+  trello.task.push(newTask);
 
-formEditEsc.addEventListener("click", () => {
-  formEdit.classList.remove("visable");
+  saveData("trello", trello);
+  render();
+}
+
+function deliteColumn(column, columnsList) {
+  trello.columns = trello.columns.filter((item) => item.uid !== column.uid);
+  trello.task = trello.task.filter((task) => task.columnId !== column.uid);
+
+  columnsList.remove();
+  saveData("trello", trello);
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  const loadedData = loadData("trello", trello);
+  Object.assign(trello, loadedData);
+  render();
 });
+
+
+formColumn.addEventListener("submit", (e) => createColumn(e));

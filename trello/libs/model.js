@@ -6,19 +6,25 @@ export function Base() {
   };
 }
 
-export function Task(name, columnId = 0) {
-  return {
-    ...Base(),
-    name,
-    columnId,
-  };
-}
-
-export function User({name, email, password}) {
+export function User({ name, email, password }) {
   return {
     ...Base(),
     name,
     email,
     password,
+  };
+}
+
+export function Column(name) {
+  return {
+    ...Base(),
+    name,
+  };
+}
+export function Task(name, columnId) {
+  return {
+    ...Base(),
+    name,
+    columnId,
   };
 }
