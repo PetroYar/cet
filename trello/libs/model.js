@@ -1,8 +1,8 @@
 export function Base() {
-  const uid = Math.floor(Math.random() * 444);
+  const uid = Math.floor(Math.random() * 9999);
   return {
     uid,
-    createDate: new Date().toLocaleDateString("uk-UA"),
+    createDate: new Date(),
   };
 }
 
@@ -15,10 +15,11 @@ export function User({ name, email, password }) {
   };
 }
 
-export function Column(name) {
+export function Column(name, userId) {
   return {
     ...Base(),
     name,
+    userId,
   };
 }
 export function Task(name, columnId) {

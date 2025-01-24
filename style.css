@@ -162,6 +162,9 @@ button:hover {
     max-width: 100%;
     background: #716F6F;
   }
+  .save-edit-button{
+    background: #00DC3B;
+  }
 }
 
 .form-add-task {

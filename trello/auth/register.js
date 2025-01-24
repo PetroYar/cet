@@ -1,7 +1,7 @@
 import { User } from "../libs/model.js";
 import { trello } from "../libs/constant.js";
 import { isExist } from "../libs/helper.js";
-import { saveData } from "../libs/store.js";
+import { saveData,loadData } from "../libs/store.js";
 
 const form = document.querySelector(".register-form");
 const errorNameMsg = document.querySelector(".error-name");
@@ -27,9 +27,12 @@ function newUser(e) {
   if (!userExistsName) {
     if (!userExistsEmail) {
       trello.users.push(user);
+      console.log(user,trello)
+      trello.user = user;
       errorNameMsg.textContent = "";
       errorEmailMsg.textContent = "";
-      // saveData()
+
+      saveData("trello", trello);
       form.reset();
       window.location.href = "/deshboard.html";
     } else {
@@ -41,5 +44,12 @@ function newUser(e) {
   }
   console.log(trello.users);
 }
+
+window.addEventListener("DOMContentLoaded", () => {
+  const loadedData = loadData("trello", trello);
+  Object.assign(trello, loadedData);
+  console.log('desh');
+  
+});
 
 form.addEventListener("submit", (e) => newUser(e));

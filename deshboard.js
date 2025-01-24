@@ -3,8 +3,8 @@ import { trello } from "./trello/libs/constant.js";
 import { saveData, loadData } from "./trello/libs/store.js";
 
 const formColumn = document.querySelector(".form-add-column");
-
-function render() {
+console.log(trello);
+export function render() {
   const wraper = document.querySelector(".wraper");
   wraper.innerHTML = "";
 
@@ -46,11 +46,41 @@ function render() {
         taskItem.classList.add("task-item");
 
         const delitTaskButton = document.createElement("button");
-        delitTaskButton.textContent = "X";
+        delitTaskButton.textContent = "remove";
 
         const editTaskButton = document.createElement("button");
         editTaskButton.textContent = " edit";
         editTaskButton.classList.add("edit");
+
+        const editInput = document.createElement("input");
+        editInput.style.display = "none";
+        editInput.value = task.name;
+
+        const saveEditButton = document.createElement("button");
+        saveEditButton.classList.add("save-edit-button");
+        saveEditButton.textContent = "save";
+        saveEditButton.style.display = "none";
+
+        editTaskButton.addEventListener("click", () => {
+          taskName.style.display = "none";
+          editInput.style.display = "block";
+          saveEditButton.style.display = "block";
+          editTaskButton.style.display = "none";
+        });
+
+        saveEditButton.addEventListener("click", () => {
+          const newNameTask = editInput.value.trim();
+          if (newNameTask) {
+            task.name = newNameTask;
+            taskName.textContent = newNameTask;
+            saveData("trello", trello);
+          }
+
+          taskName.style.display = "block";
+          editInput.style.display = "none";
+          editTaskButton.style.display = "block";
+          saveEditButton.style.display = "none";
+        });
 
         const select = document.createElement("select");
 
@@ -77,7 +107,15 @@ function render() {
           saveData("trello", trello);
           render();
         });
-        taskItem.append(taskName, delitTaskButton, editTaskButton, select);
+
+        taskItem.append(
+          taskName,
+          editInput,
+          delitTaskButton,
+          editTaskButton,
+          saveEditButton,
+          select
+        );
         columnsList.append(taskItem);
 
         delitTaskButton.addEventListener("click", () =>
@@ -139,9 +177,11 @@ function deliteTask(task, taskItem) {
   taskItem.remove();
 }
 
+
 window.addEventListener("DOMContentLoaded", () => {
   const loadedData = loadData("trello", trello);
   Object.assign(trello, loadedData);
+  console.log('desh');
   render();
 });
 
