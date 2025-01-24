@@ -3,7 +3,7 @@ import { trello } from "./trello/libs/constant.js";
 import { saveData, loadData } from "./trello/libs/store.js";
 
 const formColumn = document.querySelector(".form-add-column");
-console.log(trello);
+
 export function render() {
   const wraper = document.querySelector(".wraper");
   wraper.innerHTML = "";
@@ -23,7 +23,7 @@ export function render() {
     columnsHeader.append(nameColumn, delitColumnBotton);
 
     columnsHeader.classList.add("column-header");
-
+//fgndfkgdfnoddfmpm
     const formAddTask = document.createElement("form");
     formAddTask.classList.add("form-add-task");
     const inputAddTask = document.createElement("input");
@@ -154,7 +154,7 @@ function createColumn(e) {
 }
 
 function createTask(name, column) {
-  const newTask = Task(name, column.uid);
+  const newTask = Task({name:name,columnId: column.uid});
 
   trello.task.push(newTask);
 

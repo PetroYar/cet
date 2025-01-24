@@ -22,10 +22,11 @@ export function Column(name, userId) {
     userId,
   };
 }
-export function Task(name, columnId) {
+export function Task({name, columnId , userId}) {
   return {
     ...Base(),
     name,
     columnId,
+    userId
   };
 }
