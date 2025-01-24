@@ -1,41 +1,30 @@
 * {
   padding: 0;
-  /* margin: 0; */
+  margin: 0;
 }
 .wraper {
- display: grid;
- grid-template-columns: repeat(3,1fr);
- gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
-h2 {
+h3 {
   text-transform: uppercase;
-  
+  text-align: center;
+  margin-bottom: 10px;
 }
 ul {
-  text-align: center;
+  /* text-align: center; */
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding: 20px;
-  
 }
 li {
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
-.task {
-  background: #c38686;
-}
-.progress {
-  background: #2c857f;
-}
-.completed {
-  background: #5fd06e;
-}
-
-.form-edit {
+/* .form-edit {
   display: none;
   position: fixed;
   top: 50%;
@@ -45,23 +34,23 @@ li {
   background: #000;
   color: #fff;
   z-index: 20;
-}
+} */
 
-.visable {
+/* .visable {
   display: block;
-}
+} */
 
-.visable::before {
+/* .visable::before {
   content: "";
-  width: 100vw; /* Виправлено на vw */
+  width: 100vw; 
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5); /* Додано прозорість для накладення */
+  background: rgba(0, 0, 0, 0.5); 
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: -1;
-}
+}  */
 .login {
   position: absolute;
   top: 50%;
@@ -80,7 +69,7 @@ li {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   width: 100%;
-   display: flex;
+  display: flex;
   gap: 100px;
   justify-content: center;
   flex-direction: column;
@@ -96,14 +85,12 @@ label {
   position: relative;
 }
 input {
- 
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 1em;
 }
- button {
+button {
   width: 100%;
   padding: 10px;
   background-color: #4caf50;
@@ -129,31 +116,56 @@ button:hover {
   text-decoration: underline;
 }
 
-.error{
-  
+.error {
   position: absolute;
-top: 65px;
-left: 0;
-color: red;
-font-size: 14px;
+  top: 65px;
+  left: 0;
+  color: red;
+  font-size: 14px;
 }
-.column{
-  background: #9C4141;
+.column {
+  background: #9c4141;
   position: relative;
   padding: 10px;
+  
 }
 
-.delitColumn{
+.delitColumnButton {
   width: max-content;
   background: red;
   position: absolute;
   right: 5px;
   top: 5px;
-  padding: 5px ;
-
+  padding: 5px;
 }
-.form-add-column{
-  input{
+.form-add-column {
+  input {
     width: 100%;
   }
+}
+
+.task-item {
+  /* display: flex !important; */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h6 {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  button {
+    /* max-width: max-content; */
+    background: red;
+  }
+  .edit {
+    max-width: 100%;
+    background: #716F6F;
+  }
+}
+
+.form-add-task {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }

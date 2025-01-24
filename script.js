@@ -13,22 +13,22 @@ function render() {
 
     columnsList.classList.add("column");
 
-    const delitColumnBtn = document.createElement("button");
-    delitColumnBtn.classList.add("delitColumn");
-    delitColumnBtn.textContent = "X";
+    const delitColumnBotton = document.createElement("button");
+    delitColumnBotton.classList.add("delitColumnButton");
+    delitColumnBotton.textContent = "X";
 
-    
     const columnsHeader = document.createElement("li");
     const nameColumn = document.createElement("h3");
     nameColumn.textContent = column.name;
-    columnsHeader.append(nameColumn, delitColumnBtn);
+    columnsHeader.append(nameColumn, delitColumnBotton);
 
     columnsHeader.classList.add("column-header");
-    
+
     const formAddTask = document.createElement("form");
+    formAddTask.classList.add("form-add-task");
     const inputAddTask = document.createElement("input");
     inputAddTask.name = "taskName";
-    
+
     const addTaskButton = document.createElement("button");
     addTaskButton.textContent = "add task";
 
@@ -40,28 +40,69 @@ function render() {
       .filter((task) => task.columnId === column.uid)
       .forEach((task) => {
         const taskItem = document.createElement("li");
-        taskItem.textContent = task.name;
+        const taskName = document.createElement("h6");
+
+        taskName.textContent = task.name;
         taskItem.classList.add("task-item");
-        columnsList.appendChild(taskItem);
-      });
-      
-      /// event
 
-      formAddTask.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const name = e.target.taskName.value;
-        if (name) {
-          createTask(name, column);
-        }
+        const delitTaskButton = document.createElement("button");
+        delitTaskButton.textContent = "X";
+
+        const editTaskButton = document.createElement("button");
+        editTaskButton.textContent = " edit";
+        editTaskButton.classList.add("edit");
+
+        const select = document.createElement("select");
+
+        trello.columns.forEach((nameColumn) => {
+          const option = document.createElement("option");
+          option.value = nameColumn.name;
+          option.textContent = nameColumn.name;
+
+          if (task.columnId === nameColumn.uid) {
+            option.selected = true;
+          }
+
+          select.append(option);
+        });
+
+        select.addEventListener("change", (e) => {
+          const nameSelect = e.target.value;
+          const column = trello.columns.find(
+            (item) => item.name === nameSelect
+          );
+
+          task.columnId = column.uid;
+
+          saveData("trello", trello);
+          render();
+        });
+        taskItem.append(taskName, delitTaskButton, editTaskButton, select);
+        columnsList.append(taskItem);
+
+        delitTaskButton.addEventListener("click", () =>
+          deliteTask(task, taskItem)
+        );
       });
 
-      delitColumnBtn.addEventListener("click", () => {
-        deliteColumn(column, columnsList);
-      });
+    /// event
+
+    formAddTask.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = e.target.taskName.value.trim();
+      if (name) {
+        createTask(name, column);
+      }
+    });
+
+    delitColumnBotton.addEventListener("click", () => {
+      deliteColumn(column, columnsList);
+    });
 
     wraper.appendChild(columnsList);
   });
 }
+
 function createColumn(e) {
   e.preventDefault();
   const columnName = e.target.name.value.trim();
@@ -89,6 +130,13 @@ function deliteColumn(column, columnsList) {
 
   columnsList.remove();
   saveData("trello", trello);
+  render();
+}
+
+function deliteTask(task, taskItem) {
+  trello.task = trello.task.filter((item) => item.uid !== task.uid);
+  saveData("trello", trello);
+  taskItem.remove();
 }
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -96,6 +144,5 @@ window.addEventListener("DOMContentLoaded", () => {
   Object.assign(trello, loadedData);
   render();
 });
-
 
 formColumn.addEventListener("submit", (e) => createColumn(e));
