@@ -12,7 +12,7 @@ function loginUser(e) {
   const userExistsEmail = isExist(trello.users, "email", email);
 
   if (userExistsEmail && userExistsPassword) {
-    const user = trello.users.filter((user) => user.email === email);
+    const user = trello.users.find((user) => user.email === email);
     saveData('trelloUser',user)
     window.location.href = "/deshboard.html";
     errorMsg.textContent = ``;

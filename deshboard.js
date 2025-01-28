@@ -210,7 +210,7 @@ function deliteTask(task, taskItem) {
 }
 
 window.addEventListener("DOMContentLoaded", async () => {
-  trello.user = loadData("trelloUser",[])[0];
+  trello.user = loadData("trelloUser",[]);
   trello.columns = (await getData(`columns?userId=${trello.user.uid}`)) || {};
   trello.task = (await getData(`task?userId=${trello.user.uid}`)) || {};
 
