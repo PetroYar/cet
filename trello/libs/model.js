@@ -3,6 +3,7 @@ export function Base() {
   return {
     uid,
     createDate: new Date(),
+    updateDate: new Date()
   };
 }
 
@@ -15,7 +16,7 @@ export function User({ name, email, password }) {
   };
 }
 
-export function Column(name, userId) {
+export function Column({name, userId}) {
   return {
     ...Base(),
     name,

@@ -1,8 +1,15 @@
 import { Column, Task } from "./trello/libs/model.js";
 import { trello } from "./trello/libs/constant.js";
 import { saveData, loadData } from "./trello/libs/store.js";
+import {
+  deleteData,
+  getData,
+  postData,
+  putData,
+} from "./trello/libs/services.js";
 
 const formColumn = document.querySelector(".form-add-column");
+const signOut = document.querySelector(".sign-out");
 
 export function render() {
   const wraper = document.querySelector(".wraper");
@@ -23,7 +30,7 @@ export function render() {
     columnsHeader.append(nameColumn, delitColumnBotton);
 
     columnsHeader.classList.add("column-header");
-//fgndfkgdfnoddfmpm
+
     const formAddTask = document.createElement("form");
     formAddTask.classList.add("form-add-task");
     const inputAddTask = document.createElement("input");
@@ -73,7 +80,8 @@ export function render() {
           if (newNameTask) {
             task.name = newNameTask;
             taskName.textContent = newNameTask;
-            saveData("trello", trello);
+
+            putData(`task/${task.id}`, { ...task });
           }
 
           taskName.style.display = "block";
@@ -103,8 +111,8 @@ export function render() {
           );
 
           task.columnId = column.uid;
-
-          saveData("trello", trello);
+          putData(`task/${task.id}`, { ...task });
+          // saveData("trello", trello);
           render();
         });
 
@@ -141,48 +149,79 @@ export function render() {
   });
 }
 
-function createColumn(e) {
+async function createColumn(e) {
   e.preventDefault();
   const columnName = e.target.name.value.trim();
   if (columnName) {
-    const newColumn = Column(columnName);
+    const newColumn = Column({ name: columnName, userId: trello.user.uid });
     trello.columns.push(newColumn);
+    console.log(newColumn);
     e.target.name.value = "";
-    saveData("trello", trello);
+    postData("columns", newColumn);
+
+    trello.columns = (await getData(`columns?userId=${trello.user.uid}`)) || {};
+
+    // saveData("trello", trello);
     render();
   }
 }
 
-function createTask(name, column) {
-  const newTask = Task({name:name,columnId: column.uid});
-
+async function createTask(name, column) {
+  const newTask = Task({
+    name: name,
+    columnId: column.uid,
+    userId: trello.user.uid,
+  });
+  console.log(newTask);
   trello.task.push(newTask);
+  postData("task", newTask);
 
-  saveData("trello", trello);
+  trello.task = (await getData(`task?userId=${trello.user.uid}`)) || {};
+  // saveData("trello", trello);
   render();
 }
 
-function deliteColumn(column, columnsList) {
+async function deliteColumn(column, columnsList) {
+  const taskDeletionPromises = trello.task
+    .filter((task) => task.columnId === column.uid)
+    .map((task) => deleteData(`task/${task.id}`)); // Створюємо масив промісів для завдань
+
   trello.columns = trello.columns.filter((item) => item.uid !== column.uid);
   trello.task = trello.task.filter((task) => task.columnId !== column.uid);
 
+  taskDeletionPromises.push(deleteData(`columns/${column.id}`));
+
+  Promise.all(taskDeletionPromises);
+  // trello.columns = (await getData("columns")) || {};
+
+  // trello.task = (await getData("task")) || {};
+  // saveData("trello", trello);
   columnsList.remove();
-  saveData("trello", trello);
   render();
 }
 
 function deliteTask(task, taskItem) {
   trello.task = trello.task.filter((item) => item.uid !== task.uid);
-  saveData("trello", trello);
+  console.log(task);
+  // saveData("trello", trello);
+  deleteData(`task/${task.id}`);
+
   taskItem.remove();
 }
 
+window.addEventListener("DOMContentLoaded", async () => {
+  trello.user = loadData("trelloUser",[])[0];
+  trello.columns = (await getData(`columns?userId=${trello.user.uid}`)) || {};
+  trello.task = (await getData(`task?userId=${trello.user.uid}`)) || {};
 
-window.addEventListener("DOMContentLoaded", () => {
-  const loadedData = loadData("trello", trello);
-  Object.assign(trello, loadedData);
-  console.log('desh');
+  console.log(trello);
   render();
+  
 });
 
 formColumn.addEventListener("submit", (e) => createColumn(e));
+
+signOut.addEventListener("click", () => {
+  trello.user = {};
+  // saveData("trello", trello.user);
+});
