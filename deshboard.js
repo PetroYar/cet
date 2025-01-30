@@ -10,7 +10,6 @@ import {
 
 const formColumn = document.querySelector(".form-add-column");
 const signOut = document.querySelector(".sign-out");
-sdc;
 export function render() {
   const wraper = document.querySelector(".wraper");
   wraper.innerHTML = "";
@@ -18,7 +17,8 @@ export function render() {
     const columnsList = document.createElement("ul");
 
     columnsList.classList.add("column");
-
+    const x = 42;
+    console.log(x);
     const delitColumnBotton = document.createElement("button");
     delitColumnBotton.classList.add("delitColumnButton");
     delitColumnBotton.textContent = "X";
