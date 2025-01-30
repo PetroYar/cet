@@ -14,7 +14,7 @@ const signOut = document.querySelector(".sign-out");
 export function render() {
   const wraper = document.querySelector(".wraper");
   wraper.innerHTML = "";
-
+  
   trello.columns.forEach((column) => {
     const columnsList = document.createElement("ul");
 
@@ -210,13 +210,12 @@ function deliteTask(task, taskItem) {
 }
 
 window.addEventListener("DOMContentLoaded", async () => {
-  trello.user = loadData("trelloUser",[]);
+  trello.user = loadData("trelloUser", []);
   trello.columns = (await getData(`columns?userId=${trello.user.uid}`)) || {};
   trello.task = (await getData(`task?userId=${trello.user.uid}`)) || {};
 
   console.log(trello);
   render();
-  
 });
 
 formColumn.addEventListener("submit", (e) => createColumn(e));
