@@ -7,10 +7,10 @@ export async function getData(params) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const data = await response.json();
-   return data
+    return data;
   } catch (error) {
     console.error(error);
-    return null
+    return null;
   }
 }
 
@@ -26,7 +26,7 @@ export async function putData(params, payload) {
     }
 
     const data = await response.json();
-   return data;
+    return data;
   } catch (error) {
     console.error("Error in PUT request:", error);
   }
@@ -42,9 +42,6 @@ export async function postData(params, payload) {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-
-    const data = await response.json();
-    console.log(data);
   } catch (error) {
     console.error("Error in POST request:", error);
   }
@@ -59,14 +56,7 @@ export async function deleteData(params) {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-
-    const data = await response.json();
-    console.log(data);
   } catch (error) {
     console.error("Error in DELETE request:", error);
   }
 }
-
-
-
-

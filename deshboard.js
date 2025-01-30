@@ -17,8 +17,7 @@ export function render() {
     const columnsList = document.createElement("ul");
 
     columnsList.classList.add("column");
-    const x = 42;
-    console.log(x);
+
     const delitColumnBotton = document.createElement("button");
     delitColumnBotton.classList.add("delitColumnButton");
     delitColumnBotton.textContent = "X";
@@ -111,7 +110,7 @@ export function render() {
 
           task.columnId = column.uid;
           putData(`task/${task.id}`, { ...task });
-          // saveData("trello", trello);
+
           render();
         });
 
@@ -129,8 +128,6 @@ export function render() {
           deliteTask(task, taskItem)
         );
       });
-
-    /// event
 
     formAddTask.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -154,13 +151,12 @@ async function createColumn(e) {
   if (columnName) {
     const newColumn = Column({ name: columnName, userId: trello.user.uid });
     trello.columns.push(newColumn);
-    console.log(newColumn);
+
     e.target.name.value = "";
     postData("columns", newColumn);
 
     trello.columns = (await getData(`columns?userId=${trello.user.uid}`)) || {};
 
-    // saveData("trello", trello);
     render();
   }
 }
@@ -171,19 +167,18 @@ async function createTask(name, column) {
     columnId: column.uid,
     userId: trello.user.uid,
   });
-  console.log(newTask);
+
   trello.task.push(newTask);
   postData("task", newTask);
 
   trello.task = (await getData(`task?userId=${trello.user.uid}`)) || {};
-  // saveData("trello", trello);
   render();
 }
 
 async function deliteColumn(column, columnsList) {
   const taskDeletionPromises = trello.task
     .filter((task) => task.columnId === column.uid)
-    .map((task) => deleteData(`task/${task.id}`)); // Створюємо масив промісів для завдань
+    .map((task) => deleteData(`task/${task.id}`));
 
   trello.columns = trello.columns.filter((item) => item.uid !== column.uid);
   trello.task = trello.task.filter((task) => task.columnId !== column.uid);
@@ -191,18 +186,14 @@ async function deliteColumn(column, columnsList) {
   taskDeletionPromises.push(deleteData(`columns/${column.id}`));
 
   Promise.all(taskDeletionPromises);
-  // trello.columns = (await getData("columns")) || {};
 
-  // trello.task = (await getData("task")) || {};
-  // saveData("trello", trello);
   columnsList.remove();
   render();
 }
 
 function deliteTask(task, taskItem) {
   trello.task = trello.task.filter((item) => item.uid !== task.uid);
-  console.log(task);
-  // saveData("trello", trello);
+
   deleteData(`task/${task.id}`);
 
   taskItem.remove();
@@ -213,7 +204,6 @@ window.addEventListener("DOMContentLoaded", async () => {
   trello.columns = (await getData(`columns?userId=${trello.user.uid}`)) || {};
   trello.task = (await getData(`task?userId=${trello.user.uid}`)) || {};
 
-  console.log(trello);
   render();
 });
 
@@ -221,5 +211,4 @@ formColumn.addEventListener("submit", (e) => createColumn(e));
 
 signOut.addEventListener("click", () => {
   trello.user = {};
-  // saveData("trello", trello.user);
 });
