@@ -10,11 +10,10 @@ import {
 
 const formColumn = document.querySelector(".form-add-column");
 const signOut = document.querySelector(".sign-out");
-
+sdc;
 export function render() {
   const wraper = document.querySelector(".wraper");
   wraper.innerHTML = "";
-  
   trello.columns.forEach((column) => {
     const columnsList = document.createElement("ul");
 
