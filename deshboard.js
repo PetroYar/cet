@@ -1,6 +1,6 @@
 import { Column, Task } from "./trello/libs/model.js";
 import { trello } from "./trello/libs/constant.js";
-import { saveData, loadData } from "./trello/libs/store.js";
+import { loadData } from "./trello/libs/store.js";
 import {
   deleteData,
   getData,
