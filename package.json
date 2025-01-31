@@ -1,0 +1,23 @@
+{
+  "name": "cet",
+  "version": "1.0.0",
+  "main": "deshboard.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PetroYar/cet.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PetroYar/cet/issues"
+  },
+  "homepage": "https://github.com/PetroYar/cet#readme",
+  "description": "",
+  "dependencies": {
+    "@editorjs/editorjs": "^2.30.8"
+  }
+}

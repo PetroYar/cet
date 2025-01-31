@@ -35,7 +35,7 @@ function newUser(e) {
       postData("users", user);
       saveData("trelloUser", user);
       form.reset();
-      window.location.href = "/deshboard.html";
+      window.location.href = "../home.html";
     } else {
       errorEmailMsg.textContent = "A user with this email already exists";
       errorNameMsg.textContent = "";
@@ -43,15 +43,13 @@ function newUser(e) {
   } else {
     errorNameMsg.textContent = "User with such name already exists";
   }
-  console.log(trello.users);
+ 
 }
 
 window.addEventListener("DOMContentLoaded", async () => {
-  // const loadedData = loadData("trello", trello);
-  // Object.assign(trello, loadedData);
+
   trello.users = (await getData("users")) || {};
 
-  console.log("desh");
 });
 
 form.addEventListener("submit", (e) => newUser(e));

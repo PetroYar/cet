@@ -9,13 +9,13 @@ import {
 } from "./trello/libs/services.js";
 
 const formColumn = document.querySelector(".form-add-column");
-const signOut = document.querySelector(".sign-out");
+
 export function render() {
   const wraper = document.querySelector(".wraper");
   wraper.innerHTML = "";
   trello.columns.forEach((column) => {
     const columnsList = document.createElement("ul");
-
+    columnsList.style.background = column.color
     columnsList.classList.add("column");
 
     const delitColumnBotton = document.createElement("button");
@@ -24,6 +24,7 @@ export function render() {
 
     const columnsHeader = document.createElement("li");
     const nameColumn = document.createElement("h3");
+
     nameColumn.textContent = column.name;
     columnsHeader.append(nameColumn, delitColumnBotton);
 
@@ -40,7 +41,25 @@ export function render() {
     formAddTask.append(inputAddTask, addTaskButton);
     columnsHeader.append(formAddTask);
     columnsList.appendChild(columnsHeader);
+    const colorPickerWrapper = document.createElement("div");
+    colorPickerWrapper.classList.add("color-picker-wrapper");
 
+    const colorPicker = document.createElement("input");
+    colorPicker.type = "color";
+    
+    colorPicker.classList.add("color-picker");
+
+    
+    colorPicker.addEventListener("input", async (e) => {
+      columnsList.style.backgroundColor = e.target.value;
+     
+     
+       putData(`columns/${column.id}`, {...column, color: e.target.value });
+       
+    });
+
+    colorPickerWrapper.appendChild(colorPicker);
+    columnsHeader.append(colorPickerWrapper);
     trello.task
       .filter((task) => task.columnId === column.uid)
       .forEach((task) => {
@@ -149,7 +168,7 @@ async function createColumn(e) {
   e.preventDefault();
   const columnName = e.target.name.value.trim();
   if (columnName) {
-    const newColumn = Column({ name: columnName, userId: trello.user.uid });
+    const newColumn = Column({ name: columnName, userId: trello.user.uid,color:'darkgray' });
     trello.columns.push(newColumn);
 
     e.target.name.value = "";
@@ -208,7 +227,3 @@ window.addEventListener("DOMContentLoaded", async () => {
 });
 
 formColumn.addEventListener("submit", (e) => createColumn(e));
-
-signOut.addEventListener("click", () => {
-  trello.user = {};
-});

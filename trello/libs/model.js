@@ -3,7 +3,7 @@ export function Base() {
   return {
     uid,
     createDate: new Date(),
-    updateDate: new Date()
+    updateDate: new Date(),
   };
 }
 
@@ -16,18 +16,26 @@ export function User({ name, email, password }) {
   };
 }
 
-export function Column({name, userId}) {
+export function Column({ name, userId,color }) {
   return {
     ...Base(),
     name,
     userId,
+    color
   };
 }
-export function Task({name, columnId , userId}) {
+export function Task({ name, columnId, userId }) {
   return {
     ...Base(),
     name,
     columnId,
-    userId
+    userId,
+  };
+}
+export function Post({ userId,data }) {
+  return {
+    ...Base(),
+    userId,
+    data
   };
 }
