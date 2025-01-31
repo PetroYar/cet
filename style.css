@@ -239,9 +239,11 @@ button:hover {
 [class*="__container"] {
   max-width: 1400px;
   margin: 0 auto;
+  position: relative;
 }
 .header {
   background: var(--header-bg);
+  margin-bottom: 30px;
 }
 .header__container {
   padding: 15px;
@@ -274,8 +276,15 @@ button:hover {
 .menu__link {
   letter-spacing: 2px;
   text-transform: capitalize;
+  transition: all 0.5s;
+}
+.menu__link:hover {
+  color: var(--date-color);
 }
 .active {
+  color: var(--accent-color);
+}
+.active:hover {
   color: var(--accent-color);
 }
 .login-container {
@@ -326,12 +335,39 @@ button:hover {
   border: none;
   background: #ffffff;
   position: relative;
- 
 }
-.color-picker::after{
-  content: 'Change color';
-  background: #FDFDFD;
+.color-picker::after {
+  content: "Change color";
+  background: #fdfdfd;
   position: absolute;
   font-size: 10px;
   top: 4px;
+}
+.h1-title {
+  font-size: 20px;
+  text-align: center;
+  text-transform: uppercase;
+}
+.post-create {
+}
+.post-menu {
+  position: absolute;
+  left: 0;
+  top: -30px;
+}
+.post-menu__list {
+  display: flex;
+  gap: 10px;
+}
+.post-menu__item {
+  background: var(--header-bg);
+  color: var(--text-color);
+  padding: 5px 10px ;
+  border-radius: 0 0 10px 10px;
+
+}
+.post-menu__item:hover{
+color: var(--date-color);
+}
+.post-menu__link {
 }

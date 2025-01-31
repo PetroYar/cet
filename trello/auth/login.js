@@ -14,7 +14,7 @@ function loginUser(e) {
   if (userExistsEmail && userExistsPassword) {
     const user = trello.users.find((user) => user.email === email);
     saveData('trelloUser',user)
-    window.location.href = "../home.html";
+    window.location.href = "../pages/home.html";
     errorMsg.textContent = ``;
   } else {
     errorMsg.textContent = "Incorrect password or email";

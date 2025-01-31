@@ -35,7 +35,7 @@ function newUser(e) {
       postData("users", user);
       saveData("trelloUser", user);
       form.reset();
-      window.location.href = "../home.html";
+      window.location.href = "../pages/home.html";
     } else {
       errorEmailMsg.textContent = "A user with this email already exists";
       errorNameMsg.textContent = "";

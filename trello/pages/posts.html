@@ -4,8 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../../style.css" />
-
-    <title>html</title>
+    <title>posts</title>
   </head>
   <body>
     <header class="header">
@@ -20,12 +19,10 @@
                 <a href="./home.html" class="menu__link">home</a>
               </li>
               <li class="menu__item">
-                <a href="./posts.html" class="menu__link">posts</a>
+                <a href="./posts.html" class="menu__link active">posts</a>
               </li>
               <li class="menu__item">
-                <a href="../deshboard.html" class="menu__link active"
-                  >Task List</a
-                >
+                <a href="./deshboard.html" class="menu__link">Task List</a>
               </li>
               <li class="menu__item">
                 <a href="./profile.html" class="menu__link">My Profile</a>
@@ -39,16 +36,24 @@
         </div>
       </div>
     </header>
-    <section class="tasks">
-      <h1 class="tasks__title h1-title">tasks</h1>
-       <div class="wraper"></div>
-    <form action="" class="form-add-column">
-      <input type="text" name="name" />
-      <button class="addColumn">add Column</button>
-    </form>
+    <section class="post">
+      <div class="post__container">
+        <h1 class="post__title h1-title">All Posts</h1>
+        <div class="post-menu">
+          <ul class="post-menu__list">
+            <li class="post-menu__item">
+              <a class="post-menu__link" href="">create post</a>
+            </li>
+            <li class="post-menu__item">
+              <a class="post-menu__link" href="">my post</a>
+            </li>
+             <li class="post-menu__item">
+              search post
+            </li>
+          </ul>
+        </div>
+        <ul class="post-list"></ul>
+      </div>
     </section>
-   
-    <!-- <a href="/index.html" class="sign-out">Sign Out</a> -->
-    <script type="module" src="../../deshboard.js"></script>
   </body>
 </html>
