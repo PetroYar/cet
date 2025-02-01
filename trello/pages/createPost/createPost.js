@@ -1,5 +1,5 @@
-import { Post } from "../libs/model.js";
-import { trello } from "../libs/constant.js";
+import { Post } from "../../libs/model.js";
+import { trello } from "../../libs/constant.js";
 
 const editor = new EditorJS({
   holder: "editorjs",
@@ -13,6 +13,7 @@ const editor = new EditorJS({
         defaultLevel: 2,
       },
     },
+
   },
 });
 
@@ -25,7 +26,7 @@ saveBtn.addEventListener("click", () => {
     .then((data) => {
       const post = new Post({ userId: trello.user.uid, data });
       console.log(post);
-      window.location.href = "./blog.html";
+      window.location.href = "/trello/pages/posts/posts.html";
     })
     .catch((error) => {
       console.log(error);

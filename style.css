@@ -349,6 +349,7 @@ button:hover {
   text-transform: uppercase;
 }
 .post-create {
+  
 }
 .post-menu {
   position: absolute;
@@ -370,4 +371,19 @@ button:hover {
 color: var(--date-color);
 }
 .post-menu__link {
+}
+
+.codex-editor__redactor{
+  padding: 50px !important;
+  border-radius: 20px;
+  background: var(--header-bg) ;
+  margin-top: 30px;
+  margin-bottom: 30px;
+
+  
+}
+.ce-block{
+  /* background: var(--header-bg); */
+  color: var(--text-color);
+  background: var(--secondary-color);
 }

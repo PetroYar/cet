@@ -18,7 +18,7 @@ function loginUser(e) {
     errorMsg.textContent = ``;
   } else {
     errorMsg.textContent = "Incorrect password or email";
-    console.log(trello);
+    
   }
 }
 
@@ -30,5 +30,4 @@ form.addEventListener("submit", (e) => {
 window.addEventListener("DOMContentLoaded", async () => {
   trello.users = (await getData("users")) || {};
   
-  console.log("login");
 });

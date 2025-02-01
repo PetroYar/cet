@@ -3,16 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../style.css" />
+
     <title>Document</title>
   </head>
   <body>
-    <h1>create post</h1>
-    <div class="wraper"></div>
-    <div id="editorjs"></div>
-    <button class="save">save</button>
+    <section class="create-post">
+      <div class="create-post__container">
+        <h1 class="create-post__title h1-title">create post</h1>
+        <div id="editorjs"></div>
+        <button class="save">save</button>
+      </div>
+    </section>
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
 
-    <script type="module" src="./blog.js"></script>
+    <script type="module" src="./createPost.js"></script>
   </body>
 </html>
