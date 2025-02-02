@@ -1,5 +1,6 @@
 import { Post } from "../../libs/model.js";
 import { trello } from "../../libs/constant.js";
+import { postData } from "../../libs/services.js";
 
 const editor = new EditorJS({
   holder: "editorjs",
@@ -25,6 +26,7 @@ saveBtn.addEventListener("click", () => {
     .save()
     .then((data) => {
       const post = new Post({ userId: trello.user.uid, data });
+      postData('posts',post)
       console.log(post);
       window.location.href = "/trello/pages/posts/posts.html";
     })

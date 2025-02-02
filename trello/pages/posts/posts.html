@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../../../style.css" />
     <title>posts</title>
+    <script src="https://unpkg.com/editorjs-html@latest/dist/editorjs-html.umd.js"></script>
   </head>
   <body>
     <header class="header">
@@ -25,7 +26,9 @@
                 <a href="../deshboard.html" class="menu__link">Task List</a>
               </li>
               <li class="menu__item">
-                <a href="../profile/profile.html" class="menu__link">My Profile</a>
+                <a href="../profile/profile.html" class="menu__link"
+                  >My Profile</a
+                >
               </li>
 
               <li class="menu__item">
@@ -42,20 +45,20 @@
         <div class="post-menu">
           <ul class="post-menu__list">
             <li class="post-menu__item">
-              <a class="post-menu__link" href="../createPost/createPost.html">create post</a>
+              <a class="post-menu__link" href="../createPost/createPost.html"
+                >create post</a
+              >
             </li>
             <li class="post-menu__item">
               <a class="post-menu__link" href="">my post</a>
             </li>
-             <li class="post-menu__item">
-              search post
-            </li>
+            <li class="post-menu__item">search post</li>
           </ul>
         </div>
-        <ul class="post-list"></ul>
+        <div class="post__list" id="output"></div>
       </div>
     </section>
-    
-<script type="module" src="./posts.js"></script>
+  
+    <script type="module" src="./posts.js"></script>
   </body>
 </html>
