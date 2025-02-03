@@ -367,6 +367,13 @@ button:hover {
   border-radius: 0 0 10px 10px;
 
 }
+.post__list{
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 .post-menu__item:hover{
 color: var(--date-color);
 }
@@ -386,4 +393,7 @@ color: var(--date-color);
   /* background: var(--header-bg); */
   color: var(--text-color);
   background: var(--secondary-color);
+}
+.post-photo{
+  width: 40px;
 }

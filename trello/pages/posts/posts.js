@@ -1,21 +1,31 @@
 import { getData } from "../../libs/services.js";
+import { loadData } from "../../libs/store.js";
 
-import { trello } from "../../libs/constant.js";
+function renderPosts(user, posts) {
+  const postsList = document.querySelector(".post__list");
 
-function render(posts) {
-  posts[0].data.blocks.forEach((element) => {
-    console.log(element)
+  posts.forEach((post) => {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = `../post/post.html?slug=${post.slug}`;
+    li.append(a);
+    const img = document.createElement("img");
+    img.src =
+      "https://www.perunica.ru/uploads/posts/2011-10/1319832745_0_6065c_b70de565_l.jpg";
+    img.classList.add("post-photo");
+    a.append(img);
+    const p = document.createElement("p");
+    p.textContent = user.name + " " + post.createDate;
+    a.append(p);
+    const h6 = document.createElement("h6");
+    h6.textContent = post.title;
+    a.append(h6);
+    postsList.append(li);
   });
 }
 
-const loadPosts = async () => {
-  try {
-    trello.posts = (await getData("posts")) || {};
-    render(trello.posts);
-    console.log(trello);
-  } catch (error) {
-    console.error("Error fetching posts:", error);
-  }
-};
-
-loadPosts();
+(async () => {
+  const posts = await getData("posts");
+  const user = loadData("trelloUser");
+  renderPosts(user, posts);
+})();

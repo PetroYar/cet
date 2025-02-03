@@ -16,12 +16,12 @@ export function User({ name, email, password }) {
   };
 }
 
-export function Column({ name, userId,color }) {
+export function Column({ name, userId, color }) {
   return {
     ...Base(),
     name,
     userId,
-    color
+    color,
   };
 }
 export function Task({ name, columnId, userId }) {
@@ -32,10 +32,20 @@ export function Task({ name, columnId, userId }) {
     userId,
   };
 }
-export function Post({ userId,data }) {
+export function Post({ userId, data, slug, title }) {
+  const base = Base();
+  const createDate = new Intl.DateTimeFormat("uk-UA", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  })
+    .format(base.createDate)
+    .replace(" р.", " року");
   return {
-    ...Base(),
+    ...{ ...base, createDate },
     userId,
-    data
+    data,
+    slug,
+    title,
   };
 }

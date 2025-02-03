@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="../../../style.css" />
     <title>posts</title>
     <script src="https://unpkg.com/editorjs-html@latest/dist/editorjs-html.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js"></script>
+
   </head>
   <body>
     <header class="header">
@@ -49,13 +51,13 @@
                 >create post</a
               >
             </li>
+            
             <li class="post-menu__item">
-              <a class="post-menu__link" href="">my post</a>
+              <select name="category" id=""></select>
             </li>
-            <li class="post-menu__item">search post</li>
           </ul>
         </div>
-        <div class="post__list" id="output"></div>
+        <ul class="post__list" ></ul>
       </div>
     </section>
   
