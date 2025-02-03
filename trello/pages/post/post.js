@@ -1,30 +1,6 @@
 import { getData } from "../../libs/services.js";
 
-import { trello } from "../../libs/constant.js";
 
-// const output = document.getElementById("output");
-
-// // Функція для рендеру
-// function renderPost(postData) {
-//   let html = "";
-
-//   postData.blocks.forEach((block) => {
-//     if (block.type === "header") {
-//       html += `<h${block.data.level}>${block.data.text}</h${block.data.level}>`;
-//     } else if (block.type === "paragraph") {
-//       html += `<p>${block.data.text}</p>`;
-//     } else if (block.type === "list") {
-//       let listType = block.data.style === "ordered" ? "ol" : "ul";
-//       html += `<${listType}>`;
-//       block.data.items.forEach((item) => {
-//         html += `<li>${item}</li>`;
-//       });
-//       html += `</${listType}>`;
-//     }
-//   });
-
-//   output.innerHTML = html;
-// }
 
 const params = new URLSearchParams(window.location.search);
 const slug = params.get("slug");
