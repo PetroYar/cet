@@ -1,3 +1,5 @@
+import { formatDate } from "./helper.js";
+
 export function Base() {
   const uid = Math.floor(Math.random() * 9999);
   return {
@@ -34,18 +36,23 @@ export function Task({ name, columnId, userId }) {
 }
 export function Post({ userId, data, slug, title }) {
   const base = Base();
-  const createDate = new Intl.DateTimeFormat("uk-UA", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  })
-    .format(base.createDate)
-    .replace(" р.", " року");
+  const createDate = formatDate(base.createDate);
   return {
     ...{ ...base, createDate },
     userId,
     data,
     slug,
     title,
+  };
+}
+
+export function Comentar({ text, userId, postId }) {
+  const base = Base();
+  const createDate = formatDate(base.createDate);
+  return {
+    ...{ ...base, createDate },
+    text,
+    userId,
+    postId,
   };
 }

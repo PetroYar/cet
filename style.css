@@ -349,7 +349,6 @@ button:hover {
   text-transform: uppercase;
 }
 .post-create {
-  
 }
 .post-menu {
   position: absolute;
@@ -363,37 +362,69 @@ button:hover {
 .post-menu__item {
   background: var(--header-bg);
   color: var(--text-color);
-  padding: 5px 10px ;
+  padding: 5px 10px;
   border-radius: 0 0 10px 10px;
-
 }
-.post__list{
+.post__list {
   width: 80%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
-.post-menu__item:hover{
-color: var(--date-color);
+.post-menu__item:hover {
+  color: var(--date-color);
 }
 .post-menu__link {
 }
 
-.codex-editor__redactor{
+.codex-editor__redactor {
   padding: 50px !important;
   border-radius: 20px;
-  background: var(--header-bg) ;
+  background: var(--header-bg);
   margin-top: 30px;
   margin-bottom: 30px;
-
-  
 }
-.ce-block{
+.ce-block {
   /* background: var(--header-bg); */
   color: var(--text-color);
   background: var(--secondary-color);
 }
-.post-photo{
+.post-photo {
   width: 40px;
+}
+
+.profile {
+}
+.profile__container {
+}
+.profile__title {
+}
+.h1-title {
+}
+.profile__edit {
+  position: absolute;
+  top: -30px;
+  width: max-content;
+  right: 0;
+  background: var(--header-bg);
+  color: var(--text-color);
+  padding: 5px 10px;
+  border-radius: 0 0 10px 10px;
+}
+.info {
+  display: flex;
+  align-items: center;
+  width: 600px;
+  margin: 0 auto;
+  gap: 30px;
+}
+.info__photo {
+  width: 100px;
+  border: 2px solid;
+  img {
+    width: 100%;
+  }
+}
+.info__name {
 }
