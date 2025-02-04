@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../../../style.css" />
 
-  <title>post</title>
-</head>
-<body>
-  <header class="header">
+    <title>post</title>
+  </head>
+  <body>
+    <header class="header">
       <div class="header__container">
         <a href="./home.html" class="header__logo"
           ><img src="../../../img/logo.png" alt="logo"
@@ -20,7 +20,9 @@
                 <a href="../home.html" class="menu__link">home</a>
               </li>
               <li class="menu__item">
-                <a href="../posts/posts.html" class="menu__link active">posts</a>
+                <a href="../posts/posts.html" class="menu__link active"
+                  >posts</a
+                >
               </li>
               <li class="menu__item">
                 <a href="../deshboard.html" class="menu__link">Task List</a>
@@ -32,14 +34,33 @@
               </li>
 
               <li class="menu__item">
-                <a href="../index.html" class="menu__link">Logout</a>
+                <a href="../../../index.html" class="menu__link">Logout</a>
               </li>
             </ul>
           </nav>
         </div>
       </div>
     </header>
-  <div class="post__container"></div>
-  <script type="module" src="./post.js"></script>
-</body>
+    <section class="post">
+      <div class="post__container">
+        <div class="post__description"></div>
+        <h2 class="post__title">comments</h2>
+        <ul class="post__comments-list">
+          
+        </ul>
+        <form class="post__comment-form" action="">
+          <label>create comments:</label>
+          <textarea
+            name="comment"
+            rows="7"
+            required
+            style="resize: none"
+          ></textarea>
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </section>
+
+    <script type="module" src="./post.js"></script>
+  </body>
 </html>

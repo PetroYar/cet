@@ -44,7 +44,7 @@ saveBtn.addEventListener("click", async (e) => {
 
       const title = titleBlock.data.text;
 
-      // Генеруємо slug
+   
       const slug = title
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")

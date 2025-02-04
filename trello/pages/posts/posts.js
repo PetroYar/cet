@@ -1,5 +1,5 @@
 import { getData } from "../../libs/services.js";
-import { loadData } from "../../libs/store.js";
+
 
 function renderPosts(posts) {
   const postsList = document.querySelector(".post__list");

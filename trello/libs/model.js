@@ -46,7 +46,7 @@ export function Post({ userId, data, slug, title }) {
   };
 }
 
-export function Comentar({ text, userId, postId }) {
+export function Comment({ text, userId, postId }) {
   const base = Base();
   const createDate = formatDate(base.createDate);
   return {
