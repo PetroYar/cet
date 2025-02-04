@@ -60,6 +60,7 @@ const loadPostsData = async () => {
     const [post] = await getData(`posts?slug=${slug}`);
     render(post);
     const comments = await getData(`comments?postId=${post.uid}`);
+    
     comments.forEach(async (comment) => {
       const [user] = await getData(`users?uid=${comment.userId}`);
       renderComment(comment, user);

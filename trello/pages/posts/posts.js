@@ -5,6 +5,7 @@ function renderPosts(posts) {
   const postsList = document.querySelector(".post__list");
 
   posts.forEach(async (post) => {
+
     const [user] = await getData(`users?uid=${post.userId}`);
 
     const li = document.createElement("li");
@@ -16,9 +17,10 @@ function renderPosts(posts) {
       "https://www.perunica.ru/uploads/posts/2011-10/1319832745_0_6065c_b70de565_l.jpg";
     img.classList.add("post-photo");
     a.append(img);
-    const p = document.createElement("p");
-    p.textContent = user.name + " " + post.createDate;
-    a.append(p);
+    const userPosts = document.createElement("a");
+    userPosts.href = '../userPosts/userPosts.html'
+    userPosts.textContent = user.name + " " + post.createDate;
+    li.append(userPosts);
     const h6 = document.createElement("h6");
     h6.textContent = post.title;
     a.append(h6);
@@ -28,5 +30,6 @@ function renderPosts(posts) {
 
 (async () => {
   const posts = await getData("posts");
-  renderPosts(posts);
+  const reversePost = [...posts].reverse();
+  renderPosts(reversePost);
 })();
