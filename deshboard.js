@@ -214,6 +214,7 @@ function deliteTask(task, taskItem) {
   trello.task = trello.task.filter((item) => item.uid !== task.uid);
 
   deleteData(`task/${task.id}`);
+         
 
   taskItem.remove();
 }

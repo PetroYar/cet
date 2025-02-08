@@ -1,7 +1,8 @@
 import { Comment } from "../../libs/model.js";
-import { getData, postData } from "../../libs/services.js";
+import { deleteData, getData, postData } from "../../libs/services.js";
 import { loadData } from "../../libs/store.js";
-
+import { renderComment } from "../../libs/ui/renderComments.js";
+const list = document.querySelector(".post__comments-list");
 const params = new URLSearchParams(window.location.search);
 const slug = params.get("slug");
 const commentForm = document.querySelector(".post__comment-form");
@@ -22,20 +23,6 @@ function render(post) {
   });
 }
 
-function renderComment(comment, user) {
-  const list = document.querySelector(".post__comments-list");
-  const li = document.createElement("li");
-  li.classList.add("comment-item");
-  const span = document.createElement("span");
-  span.textContent = user.name;
-  const p = document.createElement("p");
-  p.textContent = comment.text;
-  const spanTime = document.createElement("span");
-  spanTime.textContent = comment.createDate;
-  spanTime.classList.add("comment-time");
-  li.append(span, p, spanTime);
-  list.append(li);
-}
 
 async function addComment(e) {
   const [post] = await getData(`posts?slug=${slug}`);
@@ -46,7 +33,7 @@ async function addComment(e) {
     postId: post.uid,
   });
   postData("comments", comment);
-  renderComment(comment, user);
+  // renderComment(comment,list);
   e.target.comment.value = "";
 }
 
@@ -60,11 +47,10 @@ const loadPostsData = async () => {
     const [post] = await getData(`posts?slug=${slug}`);
     render(post);
     const comments = await getData(`comments?postId=${post.uid}`);
-    
-    comments.forEach(async (comment) => {
-      const [user] = await getData(`users?uid=${comment.userId}`);
-      renderComment(comment, user);
-    });
+
+   
+      renderComment(comments,list);
+   
   } catch (error) {
     console.error("Error fetching posts:", error);
   }

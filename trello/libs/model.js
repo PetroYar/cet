@@ -17,6 +17,20 @@ export function User({ name, email, password }) {
     password,
   };
 }
+const PIERMITION = {
+  ADMIN: 0,
+  MODERATOR: 1,
+  CREATOR: 2,
+};
+export function Admin({ name, email, password }, permition) {
+  return {
+    ...User({ name, email, password }),
+    permition
+  };
+}
+
+// const petro = Admin({name:'fggff',password:'dsff',email:'sdff@ff'},PIERMITION.ADMIN)
+
 
 export function Column({ name, userId, color }) {
   return {
@@ -34,7 +48,7 @@ export function Task({ name, columnId, userId }) {
     userId,
   };
 }
-export function Post({ userId, data, slug, title }) {
+export function Post({ userId, data, slug, title, categoryId }) {
   const base = Base();
   const createDate = formatDate(base.createDate);
   return {
@@ -43,6 +57,7 @@ export function Post({ userId, data, slug, title }) {
     data,
     slug,
     title,
+    categoryId: categoryId ?? null,
   };
 }
 
@@ -54,5 +69,12 @@ export function Comment({ text, userId, postId }) {
     text,
     userId,
     postId,
+  };
+}
+
+export function Category(name) {
+  return {
+    ...Base(),
+    name,
   };
 }

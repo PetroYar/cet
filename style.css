@@ -372,6 +372,18 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  li {
+    position: relative;
+    background: var(--header-bg);
+    button{
+      position: absolute;
+      width: max-content;
+      right: 0;
+      top: -10px;
+      padding: 5px;
+    }
+    
+  }
 }
 .post-menu__item:hover {
   color: var(--date-color);
@@ -447,7 +459,6 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  
 }
 .comment-item {
   background: var(--header-bg);
@@ -458,18 +469,39 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  p{
+  p {
     max-width: 80%;
     font-size: 16px;
   }
-  span{
+  span {
     text-transform: capitalize;
-    
   }
 }
-.comment-time{
+.date {
   position: absolute;
   right: 20px;
   top: 30%;
   font-size: 10px;
+}
+.pagination {
+  display: flex;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%);
+}
+.pagination__count {
+  display: flex;
+}
+.pagination__button {
+  background: var(--header-bg);
+}
+.pagination__button:hover {
+  background: var(--secondary-color);
+}
+.active-btn {
+  color: var(--accent-color);
+  background: var(--secondary-color);
+}
+@view-transition {
+  navigation: auto;
 }

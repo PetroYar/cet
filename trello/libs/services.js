@@ -6,8 +6,21 @@ export async function getData(params) {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
+
     const data = await response.json();
     return data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+export async function getTotalCount(params) {
+  try {
+    const response = await fetch(url + params, { method: "GET" });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response;
   } catch (error) {
     console.error(error);
     return null;

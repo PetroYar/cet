@@ -1,9 +1,9 @@
-import { Post } from "../../libs/model.js";
-import { trello } from "../../libs/constant.js";
-import { postData } from "../../libs/services.js";
-import { loadData } from "../../libs/store.js";
+import { getData, putData } from "../../libs/services.js";
 
-trello.user = loadData("trelloUser", null);
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+const [post] = await getData("posts?id=" + id);
 
 const editor = new EditorJS({
   holder: "editorjs",
@@ -17,16 +17,7 @@ const editor = new EditorJS({
       },
     },
   },
-  data: {
-    blocks: [
-      {
-        type: "header",
-        data: {
-          level: 2,
-        },
-      },
-    ],
-  },
+  data: post.data,
 });
 
 const saveBtn = document.querySelector(".save");
@@ -44,20 +35,20 @@ saveBtn.addEventListener("click", async (e) => {
 
       const title = titleBlock.data.text;
 
-   
       const slug = title
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-|-$/g, "");
 
-      const post = new Post({
-        userId: trello.user.uid,
+      const updatedPost = {
+        userId: post.userId,
         title,
         slug,
         data,
-      });
+      };
 
-      await postData("posts", post);
+      await putData(`posts/${post.id}`, updatedPost);
+
       window.location.href = "../posts/posts.html";
     })
     .catch((error) => {

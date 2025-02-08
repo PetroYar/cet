@@ -1,35 +1,47 @@
-import { getData } from "../../libs/services.js";
+import { getData, getTotalCount } from "../../libs/services.js";
+import { renderPosts } from "../../libs/ui/renderPosts.js";
+
+const postsList = document.querySelector(".post__list");
+
+const params = new URLSearchParams(window.location.search);
+const _limit = params.get("_limit") || 3;
+const _start = params.get("_start") || 0;
 
 
-function renderPosts(posts) {
-  const postsList = document.querySelector(".post__list");
 
-  posts.forEach(async (post) => {
+let currentPage = 0;
+let totalPages = 0;
+let limit = 4;
 
-    const [user] = await getData(`users?uid=${post.userId}`);
+function createPagination(totalCount, limit, start) {
+  const container = document.querySelector(".pagination__count");
+  container.innerHTML = "";
 
-    const li = document.createElement("li");
+  totalPages = Math.ceil(totalCount / limit);
+  currentPage = Math.floor(start / limit);
+
+  for (let i = 0; i < totalPages; i++) {
     const a = document.createElement("a");
-    a.href = `../post/post.html?slug=${post.slug}`;
-    li.append(a);
-    const img = document.createElement("img");
-    img.src = user.img ||
-      "https://www.perunica.ru/uploads/posts/2011-10/1319832745_0_6065c_b70de565_l.jpg";
-    img.classList.add("post-photo");
-    a.append(img);
-    const userPosts = document.createElement("a");
-    userPosts.href = '../userPosts/userPosts.html'
-    userPosts.textContent = user.name + " " + post.createDate;
-    li.append(userPosts);
-    const h6 = document.createElement("h6");
-    h6.textContent = post.title;
-    a.append(h6);
-    postsList.append(li);
-  });
+    a.classList.add("pagination__button");
+    a.textContent = i + 1;
+    a.href = `?_limit=${_limit}&_start=${i * _limit}&page=${i + 1}`;
+
+    currentPage === i && a.classList.add("active-btn");
+
+    container.append(a);
+  }
 }
 
-(async () => {
-  const posts = await getData("posts");
-  const reversePost = [...posts].reverse();
-  renderPosts(reversePost);
-})();
+async function getPosts() {
+  postsList.innerHTML = "";
+
+  const posts = await getData(
+    `posts?_start=${_start}&_limit=${_limit}&_sort=id&_order=desc`
+  );
+  const response = await getTotalCount("posts");
+  const totalCount = response.headers.get("X-Total-Count") || 20;
+  renderPosts(posts,postsList);
+  createPagination(totalCount, _limit, _start);
+}
+
+getPosts();

@@ -7,7 +7,6 @@
     <title>posts</title>
     <script src="https://unpkg.com/editorjs-html@latest/dist/editorjs-html.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/slugify@1.6.6/slugify.min.js"></script>
-
   </head>
   <body>
     <header class="header">
@@ -51,16 +50,21 @@
                 >create post</a
               >
             </li>
-            
+
             <li class="post-menu__item">
               <select name="category" id=""></select>
             </li>
           </ul>
         </div>
-        <ul class="post__list" ></ul>
+        <ul class="post__list"></ul>
+        <div class="pagination">
+          <button id="prev" class="pagination__button"><</button>
+          <div class="pagination__count"></div>
+          <button id="next" class="pagination__button">></button>
+        </div>
       </div>
     </section>
-  
+
     <script type="module" src="./posts.js"></script>
   </body>
 </html>
